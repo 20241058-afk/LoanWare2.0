@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanWare | Login </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../publico.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<body class="bg-loanware-gradient min-h-screen">
+
+    <nav class="w-full py-4 px-10 flex justify-between items-center bg-[#1a392a] text-white shadow-lg">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-microchip text-[#09FF00] text-2xl"></i>
+            <span class="text-2xl font-bold tracking-tight">Loan<span class="text-[#09FF00]">Ware</span></span>
+        </div>
+        <div class="hidden md:block text-sm font-medium opacity-80">
+            Sistema Escolar de Préstamo de Equipos
+        </div>
+        <a href="/index.html">
+            <button class="px-6 py-2 border border-[#09FF00] text-[#09FF00] rounded-lg hover:bg-[#09FF00] hover:text-[#1a392a] transition-all font-bold">
+                INICIO
+            </button>
+        </a>
+    </nav>
+
+    <main class="container mx-auto flex flex-col lg:flex-row items-center justify-center min-h-[calc(100vh-120px)] p-6 gap-16">
+        
+        <div class="lg:w-1/2 space-y-6 text-center lg:text-left">
+            <h1 class="text-5xl lg:text-6xl font-extrabold text-[#1a392a] leading-tight">
+                LOANWARE <br>
+            </h1>
+            <p class="text-gray-600 text-lg max-w-md mx-auto lg:mx-0">
+                Accede al catálogo completo de herramientas y tecnología de la institucion.
+            </p>
+            
+            <div class="flex justify-center lg:justify-start gap-6 pt-4">
+                <div class="p-4 bg-white rounded-2xl shadow-sm border-b-4 border-[#09FF00]">
+                    <i class="fas fa-laptop-code text-3xl text-[#1a392a]"></i>
+                </div>
+                <div class="p-4 bg-white rounded-2xl shadow-sm border-b-4 border-[#09FF00]">
+                    <i class="fas fa-tools text-3xl text-[#1a392a]"></i>
+                </div>
+                <div class="p-4 bg-white rounded-2xl shadow-sm border-b-4 border-[#09FF00]">
+                    <i class="fas fa-camera text-3xl text-[#1a392a]"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:w-1/3 w-full max-w-md">
+            <div class="glass-card p-10 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-[#09FF00] opacity-10 rounded-full -mr-10 -mt-10"></div>
+                
+                <div class="text-center mb-10">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-[#1a392a] rounded-2xl shadow-xl mb-4 rotate-3">
+                        <i class="fas fa-user-shield text-white text-3xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-[#1a392a]">Bienvenido</h2>
+                    <p class="text-gray-500 font-medium">Ingrese sus credenciales</p>
+                </div>
+
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest font-bold text-[#1a392a] mb-2 ml-1">Usuario / Email</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" placeholder="Ingrese el Usuario o Email" 
+                                class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 outline-none input-focus transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest font-bold text-[#1a392a] mb-2 ml-1">Contraseña</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" placeholder="Ingrese la Contraseña" 
+                                class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 outline-none input-focus transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <button class="w-full py-4 btn-loanware text-white font-bold rounded-xl shadow-lg text-sm tracking-widest uppercase">
+                        Entrar al Sistema
+                    </button>
+
+                    <div class="flex flex-col gap-3 text-center mt-6">
+                        <a href="#" class="text-xs font-bold text-[#2d5a43] hover:text-[#09FF00] transition-colors">¿OLVIDASTE TU CONTRASEÑA?</a>
+                        <div class="h-[1px] bg-gray-100 w-full"></div>
+                        <p class="text-xs text-gray-400 font-medium">SOLICITAR ACCESO CON EL ADMINISTRADOR</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <div class="accessibility-wrapper" id="draggableWrapper">
+        <button class="btn-access" id="accessBtn" title="Opciones de Accesibilidad">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        
+        <div class="access-menu" id="accessMenu">
+        <h4>Centro de Inclusión</h4>
+        <div class="access-section">
+            <small>VISIÓN Y CEGUERA</small>
+            <button  type="button" onclick="toggleNarrador()"><i class="fas fa-comment-dots"></i> Narrador de Voz</button>
+            <button type="button" onclick="toggleDaltonismo()"><i class="fas fa-eye"></i> Modos Daltonismo</button>
+        </div>
+        <div class="access-section">
+            <small>TAMAÑO DE TEXTO</small>
+            <button type="button" onclick="cambiarFontSize('increase')"><i class="fas fa-plus"></i> Aumentar</button>
+            <button type="button" onclick="cambiarFontSize('decrease')"><i class="fas fa-minus"></i> Disminuir</button>
+        </div>
+        </div>
+    </div>
+
+    <div id="reading-guide" class="reading-guide"></div>
+
+    <script src="../main.js"></script>
+</body>
+       
+</div>
+
+
+</body>
+</html>
