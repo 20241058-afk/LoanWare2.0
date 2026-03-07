@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoanWare | Equipos Disponibles</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../publico.css">
+    <link rel="stylesheet" href="publico.css">
 </head>
+
 <body>
-     <header class="header">
-            <div class="header-container">
-                <div class="logo">
-                    <i class="fas fa-microchip"></i>
-                    <h1>Loan<span>Ware</span></h1>
-                </div>
-                <nav class="main-nav">
-                    <a href="index.html">Inicio</a>
-                    <a href="/equipos.html">Equipos</a> 
-                     <div class="dropdown" style="display: inline-block; position: relative;">
-    
-                <a href="" class="dropbtn">
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <h1>Loan<span>Ware</span></h1>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">Inicio</a>
+                <a href="equipos.html">Equipos</a>
+                <div class="dropdown" style="display: inline-block; position: relative;">
+
+                    <a href="" class="dropbtn">
                     Acerca de... <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
                 </a>
-                
-                <div class="dropdown-content">
-                    <a href="quienes.php">
-                        <i class="fas fa-users"></i> Quiénes Somos
-                    </a>
-                    <a href="mision.php">
-                        <i class="fas fa-bullseye"></i> Misión
-                    </a>
-                    <a href="vision.php">
-                        <i class="fas fa-eye"></i> Visión
-                    </a>
-                </div>
 
-            </div>
-                    <a href="/contacto.html">Contacto</a>
-                </nav>
-                <div class="login-container">
-                    <a href="/login.html" class="btn-login">
-                        <i class="fas fa-user-circle"></i> Iniciar Sesión
-                    </a>
+                    <div class="dropdown-content">
+                        <a href="quienes.html">
+                            <i class="fas fa-users"></i> Quiénes Somos
+                        </a>
+                        <a href="mision.html">
+                            <i class="fas fa-bullseye"></i> Misión
+                        </a>
+                        <a href="vision.html">
+                            <i class="fas fa-eye"></i> Visión
+                        </a>
+                    </div>
+
                 </div>
+                <a href="contacto.html">Contacto</a>
+            </nav>
+            <div class="login-container">
+                <a href="login.html" class="btn-login">
+                    <i class="fas fa-user-circle"></i> Iniciar Sesión
+                </a>
             </div>
-        </header>
+        </div>
+    </header>
 
 
     <main class="container" style="display: grid; grid-template-columns: 250px 1fr; gap: 40px; padding: 60px 20px;">
@@ -71,76 +73,77 @@
                 </div>
             </div>
         </section>
-    </main> 
+    </main>
 
-<div class="accessibility-wrapper" id="draggableWrapper">
+    <div class="accessibility-wrapper" id="draggableWrapper">
         <button class="btn-access" id="accessBtn" title="Opciones de Accesibilidad">
             <i class="fas fa-universal-access"></i> 
         </button>
-        
+
         <div class="access-menu" id="accessMenu">
-        <h4>Centro de Inclusión</h4>
-        <div class="access-section">
-            <small>VISIÓN Y CEGUERA</small>
-            <button  type="button" onclick="toggleNarrador()"><i class="fas fa-comment-dots"></i> Narrador de Voz</button>
-            <button type="button" onclick="toggleDaltonismo()"><i class="fas fa-eye"></i> Modos Daltonismo</button>
-        </div>
-        <div class="access-section">
-            <small>TAMAÑO DE TEXTO</small>
-            <button type="button" onclick="cambiarFontSize('increase')"><i class="fas fa-plus"></i> Aumentar</button>
-            <button type="button" onclick="cambiarFontSize('decrease')"><i class="fas fa-minus"></i> Disminuir</button>
-        </div>
+            <h4>Centro de Inclusión</h4>
+            <div class="access-section">
+                <small>VISIÓN Y CEGUERA</small>
+                <button type="button" onclick="toggleNarrador()"><i class="fas fa-comment-dots"></i> Narrador de Voz</button>
+                <button type="button" onclick="toggleDaltonismo()"><i class="fas fa-eye"></i> Modos Daltonismo</button>
+            </div>
+            <div class="access-section">
+                <small>TAMAÑO DE TEXTO</small>
+                <button type="button" onclick="cambiarFontSize('increase')"><i class="fas fa-plus"></i> Aumentar</button>
+                <button type="button" onclick="cambiarFontSize('decrease')"><i class="fas fa-minus"></i> Disminuir</button>
+            </div>
         </div>
     </div>
 
 
     <div id="reading-guide" class="reading-guide"></div>
     <footer class="footer">
-    <div class="footer-contenido container">
-        <div class="footer-col">
-            <h3>Loan<span>Ware</span></h3>
-            <p>Sistema de gestión de préstamo de equipos y accesorios escolares. Potenciando la educación tecnológica.</p>
-            <div class="redes-sociales">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <div class="footer-contenido container">
+            <div class="footer-col">
+                <h3>Loan<span>Ware</span></h3>
+                <p>Sistema de gestión de préstamo de equipos y accesorios escolares. Potenciando la educación tecnológica.</p>
+                <div class="redes-sociales">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> LoanWare@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +52 771 234 8743</p>
+                <p><i class="fas fa-location-dot"></i> Huejutla de Reyes, Hidalgo</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <div class="footer-links">
+                    <a href="../index.html">Inicio</a>
+                    <a href="../equipos/equipos.html">Catálogo de Equipos</a>
+                    <a href="../quienes/quienes.html">Sobre Nosotros</a>
+                    <a href="../contacto/contacto.html">Soporte Técnico</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <div class="footer-links">
+                    <a href="#">Aviso de Privacidad</a>
+                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Reglamento de Préstamos</a>
+                </div>
             </div>
         </div>
 
-        <div class="footer-col">
-            <h4>Contacto</h4>
-            <p><i class="fas fa-envelope"></i> LoanWare@gmail.com</p>
-            <p><i class="fas fa-phone"></i> +52 771 234 8743</p>
-            <p><i class="fas fa-location-dot"></i> Huejutla de Reyes, Hidalgo</p>
+        <div class="footer-bottom">
+            &copy; 2026 <strong>LoanWare</strong> — Diseñado para el éxito educativo.
         </div>
-
-        <div class="footer-col">
-            <h4>Navegación</h4>
-            <div class="footer-links">
-                <a href="../index.html">Inicio</a>
-                <a href="../equipos/equipos.html">Catálogo de Equipos</a>
-                <a href="../quienes/quienes.html">Sobre Nosotros</a>
-                <a href="../contacto/contacto.html">Soporte Técnico</a>
-            </div>
-        </div>
-
-        <div class="footer-col">
-            <h4>Legal</h4>
-            <div class="footer-links">
-                <a href="#">Aviso de Privacidad</a>
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Reglamento de Préstamos</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        &copy; 2026 <strong>LoanWare</strong> — Diseñado para el éxito educativo.
-    </div>
-    </footer> 
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <script src="../main.js"></script>  
-    </body>
+
+    <script src="../main.js"></script>
+</body>
+
 </html>
