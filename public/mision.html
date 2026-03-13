@@ -4,87 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoanWare | Equipos Disponibles</title>
+    <title>Misión | LoanWare</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="publico.css">
-    <style>
-        .categoria-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.88rem;
-            color: var(--primary);
-            font-weight: 500;
-            transition: background 0.2s;
-            text-decoration: none;
-        }
-
-        .categoria-item:hover {
-            background: #f0f4ff;
-        }
-
-        .categoria-item.activa {
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-        }
-
-        .categoria-item.activa i {
-            color: white;
-        }
-
-        .badge-count {
-            margin-left: auto;
-            background: #e2e8f0;
-            color: #475569;
-            font-size: 0.72rem;
-            padding: 1px 7px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .categoria-item.activa .badge-count {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-        }
-
-        #buscador {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            margin-bottom: 16px;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-            box-sizing: border-box;
-        }
-
-        #buscador:focus {
-            border-color: var(--primary);
-        }
-
-        .sin-resultados {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-muted);
-        }
-
-        .sin-resultados i {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-            display: block;
-            opacity: 0.4;
-        }
-    </style>
 </head>
 
 <body>
+
     <header class="header">
         <div class="header-container">
             <div class="logo">
@@ -92,16 +19,17 @@
                 <h1>Loan<span>Ware</span></h1>
             </div>
             <nav class="main-nav">
-                <a href="index.html">Inicio</a>
+                <a href="home.html">Inicio</a>
                 <a href="equipos.html">Equipos</a>
+                <a href="solicitudes.html">Mis Solicitudes</a>
                 <div class="dropdown" style="display: inline-block; position: relative;">
                     <a href="" class="dropbtn">
                         Acerca de... <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
                     </a>
                     <div class="dropdown-content">
-                        <a href="quienes.php"><i class="fas fa-users"></i> Quiénes Somos</a>
-                        <a href="mision.php"><i class="fas fa-bullseye"></i> Misión</a>
-                        <a href="vision.php"><i class="fas fa-eye"></i> Visión</a>
+                        <a href="quienes.html"><i class="fas fa-users"></i> Quiénes Somos</a>
+                        <a href="mision.html"><i class="fas fa-bullseye"></i> Misión</a>
+                        <a href="vision.html"><i class="fas fa-eye"></i> Visión</a>
                     </div>
                 </div>
                 <a href="contacto.html">Contacto</a>
@@ -114,43 +42,51 @@
         </div>
     </header>
 
-    <main class="container" style="display: grid; grid-template-columns: 250px 1fr; gap: 40px; padding: 60px 20px;">
+    <main class="container seccion-about" style="padding-top: 40px;">
 
-        <!-- SIDEBAR DINÁMICO -->
-        <aside
-            style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow); height: fit-content;">
-            <h3
-                style="color: var(--primary); margin-bottom: 15px; font-size: 1.1rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px;">
-                <i class="fas fa-filter"></i> Categorías
-            </h3>
-            <input type="text" id="buscador" placeholder="🔍 Buscar categoría..." oninput="filtrarCategorias()">
-            <ul id="listaCategorias" style="list-style: none; padding: 0; margin: 0;">
-                <li>
-                    <a class="categoria-item activa" onclick="seleccionarCategoria(null, this)">
-                        <i class="fas fa-boxes-stacked"></i> Todos los equipos
-                        <span class="badge-count" id="badge-todos">0</span>
-                    </a>
-                </li>
-                <li id="cargandoCategorias" style="padding: 10px; color: var(--text-muted); font-size:0.85rem;">
-                    <i class="fas fa-circle-notch fa-spin"></i> Cargando...
-                </li>
-            </ul>
-        </aside>
+        <div class="section-header">
+            <span class="tag">Identidad Institucional</span>
+            <h2>Nuestra <span style="color: var(--primary);">Misión</span></h2>
+            <div class="line"></div>
+            <p style="color: var(--text-muted);">El propósito que guía cada una de nuestras acciones.</p>
+        </div>
 
-        <!-- SECCIÓN PRINCIPAL -->
-        <section>
-            <div class="section-header" style="text-align: left; margin-bottom: 40px;">
-                <h2 style="font-size: 2rem;" id="tituloSeccion">Catálogo de Equipos</h2>
-                <div class="line" style="margin: 10px 0;"></div>
-                <p id="subtituloSeccion" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;"></p>
+        <div class="about-grid">
+
+            <!-- TEXTO DE MISIÓN -->
+            <div class="card" style="padding: 35px;">
+                <div class="card-icon" style="margin-bottom: 20px;">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3 style="color: var(--primary); margin-bottom: 15px;">¿Por qué existimos?</h3>
+                <p id="textoMision" style="color: var(--text-muted); font-size: 1rem; line-height: 1.8;">
+                    Cargando contenido...
+                </p>
             </div>
-            <div id="contenedorEquipos" class="contenedor-noticias">
-                <div class="loader" style="grid-column: 1/-1; text-align: center; padding: 50px;">
-                    <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                    <p style="margin-top: 15px; color: var(--text-muted);">Cargando catálogo...</p>
+
+            <!-- TARJETAS COMPLEMENTARIAS -->
+            <div class="about-text" style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="stat-card">
+                    <i class="fas fa-users" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">Comunidad Educativa</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                        Trabajamos para que estudiantes y docentes tengan acceso equitativo a los recursos tecnológicos
+                        que necesitan.
+                    </p>
+                </div>
+
+                <div class="stat-card">
+                    <i class="fas fa-handshake"
+                        style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">Compromiso Institucional</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                        Gestionamos los préstamos con transparencia, responsabilidad y un enfoque centrado en el
+                        bienestar académico.
+                    </p>
                 </div>
             </div>
-        </section>
+
+        </div>
     </main>
 
     <div class="accessibility-wrapper" id="draggableWrapper">
@@ -176,6 +112,7 @@
     </div>
 
     <div id="reading-guide" class="reading-guide"></div>
+
 
     <footer class="footer">
         <div class="footer-contenido container">
@@ -218,10 +155,31 @@
             &copy; 2026 <strong>LoanWare</strong> — Diseñado para el éxito educativo.
         </div>
     </footer>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="main.js"></script>
-    <script src="js/equipos.js"></script>
+    <script>
+        async function cargarMision() {
+            try {
+                const res = await fetch('http://localhost:3000/api/ajustes/mision')
+                const data = await res.json()
+                if (data?.valor) {
+                    document.getElementById('textoMision').textContent = data.valor
+                } else {
+                    document.getElementById('textoMision').textContent =
+                        'Formar profesionistas competitivos mediante educación de calidad, con sentido humanista, ' +
+                        'responsabilidad, inclusión y respeto a los derechos humanos, vinculados al sector productivo ' +
+                        'y orientados a la sustentabilidad.'
+                }
+            } catch {
+                document.getElementById('textoMision').textContent =
+                    'Formar profesionistas competitivos mediante educación de calidad, con sentido humanista, ' +
+                    'responsabilidad, inclusión y respeto a los derechos humanos, vinculados al sector productivo ' +
+                    'y orientados a la sustentabilidad.'
+            }
+        }
+
+        cargarMision()
+    </script>
 </body>
 
 </html>
