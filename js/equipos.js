@@ -1,4 +1,4 @@
-const API = 'https://prestamos-xi.vercel.app/api/'
+const API = 'https://prestamos-xi.vercel.app/api'
 
 let todosLosEquipos = []
 let categoriaActiva = null
