@@ -122,22 +122,23 @@ function mostrarToast(mensaje, tipo = 'success') {
 }
 
 // ─── SELECCIONAR CATEGORÍA ────────────────────────────────────────
-function seleccionarCategoria(idCategoria, elemento) {
-    document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('activa'))
-    elemento.classList.add('activa')
+function seleccionarCategoria(nombreCategoria, elemento) {
+    // Quitar clase activa de todos
+    document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('activa'));
+    // Poner clase activa al seleccionado
+    elemento.classList.add('activa');
 
-    categoriaActiva = idCategoria
+    categoriaActiva = nombreCategoria;
 
-    const titulo = document.getElementById('tituloSeccion')
-    titulo.textContent = idCategoria
-        ? elemento.querySelector('span:not(.badge-count)')?.textContent || 'Catálogo'
-        : 'Catálogo de Equipos'
+    const titulo = document.getElementById('tituloSeccion');
+    titulo.textContent = nombreCategoria ? nombreCategoria : 'Catálogo de Equipos';
 
-    const filtrados = idCategoria
-        ? todosLosEquipos.filter(e => e.id_categoria === idCategoria)
-        : todosLosEquipos
+    // Filtrar por el nombre de la categoría
+    const filtrados = nombreCategoria
+        ? todosLosEquipos.filter(e => e.categoria.trim().toLowerCase() === nombreCategoria.trim().toLowerCase())
+        : todosLosEquipos;
 
-    renderizarEquipos(filtrados)
+    renderizarEquipos(filtrados);
 }
 
 // ─── FILTRAR CATEGORÍAS EN SIDEBAR ───────────────────────────────
@@ -161,19 +162,25 @@ async function cargarCategorias() {
         if (loader) loader.remove();
         if (!lista) return;
 
-        // Limpiar lista antes de agregar (por si se llama varias veces)
+        // 1. Limpiamos la lista excepto el primer elemento (Todos los equipos)
+        const itemTodos = lista.firstElementChild;
         lista.innerHTML = '';
+        lista.appendChild(itemTodos);
 
         categorias.forEach(cat => {
-            // Filtrar para mostrar solo categorías que tienen equipos
-            const count = todosLosEquipos.filter(e => e.id_categoria === cat.id_categoria).length;
-            if (count === 0) return;
+            // 2. CORRECCIÓN: Filtramos por el NOMBRE de la categoría
+            // Comparamos el nombre de la categoría de la API con el campo 'categoria' del equipo
+            const count = todosLosEquipos.filter(e => 
+                e.categoria.trim().toLowerCase() === cat.nombre.trim().toLowerCase()
+            ).length;
+
+            if (count === 0) return; // Si no hay equipos, no mostramos la categoría
 
             const li = document.createElement('li');
             li.innerHTML = `
                 <a class="categoria-item" data-nombre="${cat.nombre}"
-                onclick="seleccionarCategoria(${cat.id_categoria}, this)">
-                    <i class="fas fa-box"></i>
+                onclick="seleccionarCategoria('${cat.nombre}', this)">
+                    <i class="fas fa-tag"></i>
                     <span>${cat.nombre}</span>
                     <span class="badge-count">${count}</span>
                 </a>`;
