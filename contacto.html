@@ -24,8 +24,8 @@
                 <div class="dropdown" style="display: inline-block; position: relative;">
 
                     <a href="" class="dropbtn">
-                    Acerca de... <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
-                </a>
+                        Acerca de... <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 5px;"></i>
+                    </a>
 
                     <div class="dropdown-content">
                         <a href="quienes.php">
@@ -50,65 +50,135 @@
         </div>
     </header>
 
-    <main class="container" style="padding: 80px 20px;">
-        <div class="section-header">
-            <h2>Formulario de Contacto</h2>
+    <main class="container" style="padding: 60px 20px;">
+
+        <div class="section-header" style="margin-bottom: 50px;">
+            <span class="tag">Soporte</span>
+            <h2>Formulario de <span style="color: var(--primary);">Contacto</span></h2>
             <div class="line"></div>
-            <p style="color: var(--text-muted); margin-top: 15px;">Estamos aquí para resolver tus dudas sobre el préstamo de equipos.</p>
+            <p style="color: var(--text-muted); margin-top: 15px;">Estamos aquí para resolver tus dudas sobre el
+                préstamo de equipos.</p>
         </div>
 
-        <section class="card" style="max-width: 600px; margin: 0 auto;">
-            <form action="enviar_contacto.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-                <div>
-                    <label style="display: block; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Nombre completo:</label>
-                    <input type="text" name="nombre" placeholder="Ej. Johan hdez" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit;">
+        <div class="about-grid" style="align-items: start;">
+
+            <!-- FORMULARIO -->
+            <div class="card" style="padding: 35px;">
+                <h3 style="color: var(--primary); margin-bottom: 25px;">
+                    <i class="fas fa-paper-plane" style="color: var(--accent);"></i> Envíanos un mensaje
+                </h3>
+                <form id="formContacto" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label
+                            style="display: block; font-weight: 700; font-size: 0.8rem; color: var(--primary); margin-bottom: 8px;">NOMBRE
+                            COMPLETO</label>
+                        <input type="text" id="nombre" placeholder="Ej. Johan Hernández" required
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline-color: var(--accent); box-sizing: border-box;">
+                    </div>
+
+                    <div>
+                        <label
+                            style="display: block; font-weight: 700; font-size: 0.8rem; color: var(--primary); margin-bottom: 8px;">CORREO
+                            ELECTRÓNICO</label>
+                        <input type="email" id="correo" placeholder="usuario@escuela.edu.mx" required
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline-color: var(--accent); box-sizing: border-box;">
+                    </div>
+
+                    <div>
+                        <label
+                            style="display: block; font-weight: 700; font-size: 0.8rem; color: var(--primary); margin-bottom: 8px;">ASUNTO</label>
+                        <select id="asunto"
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 0.95rem; outline-color: var(--accent); background: white; box-sizing: border-box;">
+                            <option value="">Selecciona un asunto...</option>
+                            <option value="prestamo">Dudas sobre préstamo</option>
+                            <option value="devolucion">Devolución de equipo</option>
+                            <option value="tecnico">Problema técnico</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label
+                            style="display: block; font-weight: 700; font-size: 0.8rem; color: var(--primary); margin-bottom: 8px;">MENSAJE</label>
+                        <textarea id="mensaje" rows="5" placeholder="Describe tu solicitud o duda..." required
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 0.95rem; resize: none; outline-color: var(--accent); box-sizing: border-box;"></textarea>
+                    </div>
+
+                    <button type="button" onclick="enviarMensaje()" class="btn-primary"
+                        style="border: none; cursor: pointer; width: 100%; padding: 14px; letter-spacing: 1px;">
+                        <i class="fas fa-paper-plane"></i> ENVIAR MENSAJE
+                    </button>
+
+                    <div id="mensajeExito"
+                        style="display: none; background: rgba(34,197,94,0.1); color: #16a34a; padding: 14px; border-radius: 10px; font-weight: 600; text-align: center; font-size: 0.9rem;">
+                        <i class="fas fa-circle-check"></i> ¡Mensaje enviado correctamente! Te responderemos pronto.
+                    </div>
+                </form>
+            </div>
+
+            <!-- INFO DE CONTACTO -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="stat-card">
+                    <i class="fas fa-envelope"
+                        style="font-size: 1.8rem; color: var(--primary); margin-bottom: 12px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 6px;">Correo</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">LoanWare@gmail.com</p>
                 </div>
 
-                <div>
-                    <label style="display: block; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Correo electrónico:</label>
-                    <input type="email" name="correo" placeholder="usuario@escuela.edu.mx" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit;">
+                <div class="stat-card">
+                    <i class="fas fa-phone" style="font-size: 1.8rem; color: var(--primary); margin-bottom: 12px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 6px;">Teléfono</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">+52 771 234 8743</p>
                 </div>
 
-                <div>
-                    <label style="display: block; font-weight: 700; color: var(--primary); margin-bottom: 8px;">Mensaje:</label>
-                    <textarea name="mensaje" rows="5" placeholder="Describe tu solicitud..." required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-family: inherit; resize: none;"></textarea>
+                <div class="stat-card">
+                    <i class="fas fa-location-dot"
+                        style="font-size: 1.8rem; color: var(--primary); margin-bottom: 12px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 6px;">Ubicación</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Huejutla de Reyes, Hidalgo</p>
                 </div>
 
-                <button type="submit" class="btn-primary" style="border: none; cursor: pointer; width: 100%;">Enviar Mensaje</button>
-            </form>
-        </section>
+                <div class="stat-card">
+                    <i class="fas fa-clock" style="font-size: 1.8rem; color: var(--primary); margin-bottom: 12px;"></i>
+                    <h4 style="color: var(--primary); margin-bottom: 6px;">Horario de atención</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Lunes a Viernes · 8:00 AM – 6:00 PM</p>
+                </div>
+            </div>
+
+        </div>
     </main>
-    </div>
+
     <div class="accessibility-wrapper" id="draggableWrapper">
         <button class="btn-access" id="accessBtn" title="Opciones de Accesibilidad">
-            <i class="fas fa-universal-access"></i> 
+            <i class="fas fa-universal-access"></i>
         </button>
-
         <div class="access-menu" id="accessMenu">
             <h4>Centro de Inclusión</h4>
             <div class="access-section">
-                <small>VISIÓN</small>
-                <button onclick="readContent()"><i class="fas fa-volume-up"></i> Leer Página</button>
-                <button onclick="toggleContrast()"><i class="fas fa-adjust"></i> Contraste Alto</button>
-                <button onclick="changeFontSize('increase')"><i class="fas fa-plus"></i> Agrandar Texto</button>
+                <small>VISIÓN Y CEGUERA</small>
+                <button type="button" onclick="toggleNarrador()"><i class="fas fa-comment-dots"></i> Narrador de
+                    Voz</button>
+                <button type="button" onclick="toggleDaltonismo()"><i class="fas fa-eye"></i> Modos Daltonismo</button>
             </div>
             <div class="access-section">
-                <small>AUDICIÓN</small>
-                <button onclick="highlightVisuals()"><i class="fas fa-eye"></i> Resaltar Enlaces</button>
-            </div>
-            <div class="access-section">
-                <small>MOTRIZ / HABLA</small>
-                <button onclick="activateGuide()"><i class="fas fa-mouse-pointer"></i> Guía de Lectura</button>
+                <small>TAMAÑO DE TEXTO</small>
+                <button type="button" onclick="cambiarFontSize('increase')"><i class="fas fa-plus"></i>
+                    Aumentar</button>
+                <button type="button" onclick="cambiarFontSize('decrease')"><i class="fas fa-minus"></i>
+                    Disminuir</button>
             </div>
         </div>
     </div>
+
     <div id="reading-guide" class="reading-guide"></div>
-    </div>
+
+
     <footer class="footer">
         <div class="footer-contenido container">
             <div class="footer-col">
                 <h3>Loan<span>Ware</span></h3>
-                <p>Sistema de gestión de préstamo de equipos y accesorios escolares. Potenciando la educación tecnológica.</p>
+                <p>Sistema de gestión de préstamo de equipos y accesorios escolares. Potenciando la educación
+                    tecnológica.</p>
                 <div class="redes-sociales">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -116,24 +186,21 @@
                     <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
-
             <div class="footer-col">
                 <h4>Contacto</h4>
                 <p><i class="fas fa-envelope"></i> LoanWare@gmail.com</p>
                 <p><i class="fas fa-phone"></i> +52 771 234 8743</p>
                 <p><i class="fas fa-location-dot"></i> Huejutla de Reyes, Hidalgo</p>
             </div>
-
             <div class="footer-col">
                 <h4>Navegación</h4>
                 <div class="footer-links">
-                    <a href="../index.html">Inicio</a>
-                    <a href="../equipos/equipos.html">Catálogo de Equipos</a>
-                    <a href="../quienes/quienes.html">Sobre Nosotros</a>
-                    <a href="../contacto/contacto.html">Soporte Técnico</a>
+                    <a href="index.html">Inicio</a>
+                    <a href="equipos.html">Catálogo de Equipos</a>
+                    <a href="quienes.html">Sobre Nosotros</a>
+                    <a href="contacto.html">Soporte Técnico</a>
                 </div>
             </div>
-
             <div class="footer-col">
                 <h4>Legal</h4>
                 <div class="footer-links">
@@ -143,7 +210,6 @@
                 </div>
             </div>
         </div>
-
         <div class="footer-bottom">
             &copy; 2026 <strong>LoanWare</strong> — Diseñado para el éxito educativo.
         </div>
