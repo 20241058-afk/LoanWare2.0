@@ -46,9 +46,10 @@ function validar(datos) {
     if (password !== confirmar)
         return 'Las contraseñas no coinciden.'
 
-    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
-    if (!emailValido)
-        return 'Ingresa un correo electrónico válido.'
+    // Solo correos institucionales @uthh.edu.mx
+    const emailInstitucional = /^[^\s@]+@uthh\.edu\.mx$/.test(correo)
+    if (!emailInstitucional)
+        return 'Solo se permiten correos institucionales (@uthh.edu.mx).'
 
     return null // sin errores
 }
