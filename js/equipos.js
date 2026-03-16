@@ -140,11 +140,12 @@ function renderizarEquipos(equipos) {
 
         return `
         <div class="card-noticia" style="display:flex; flex-direction:column;">
-            <div style="position:relative;">
+            <div style="position:relative; background:#fff; border-radius:12px; overflow:hidden;">
                 <img src="${equipo.ruta_imagen || 'https://placehold.co/300x180?text=Sin+imagen'}"
                     alt="${equipo.nombre}"
-                    style="width:100%; height:180px; object-fit:cover; border-radius:12px;"
+                    style="width:100%; height:180px; object-fit:contain; padding:10px;" 
                     onerror="this.src='https://placehold.co/300x180?text=Sin+imagen'">
+                
                 <span style="position:absolute; top:10px; right:10px;
                             background:${getBadgeColor(equipo.estado)}; color:white;
                             padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:700;">
