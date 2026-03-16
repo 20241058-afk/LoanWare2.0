@@ -131,7 +131,7 @@ async function iniciarSesion() {
         localStorage.setItem('nombre', data.usuario.nombre);
         localStorage.setItem('id_rol', data.usuario.id_rol);
 
-        window.location.href = data.usuario.id_rol === 1 ? 'adminDashboard.html' : 'home.html';
+        window.location.href = data.usuario.id_rol === 1 ? 'adminDashboard.html' : 'public/home.html';
 
     } catch (err) {
         console.error(err);
