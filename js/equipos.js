@@ -1,13 +1,13 @@
-const API = 'http://localhost:3000/api'
+const API = 'https://prestamos-xi.vercel.app/api'
 
-let todosLosEquipos  = []
+let todosLosEquipos = []
 let equiposFiltrados = []
-let categoriaActiva  = null
-let paginaActual     = 1
-const POR_PAGINA     = 10
+let categoriaActiva = null
+let paginaActual = 1
+const POR_PAGINA = 10
 
 // ─── SESIÓN ───────────────────────────────────────────────────────
-const token      = localStorage.getItem('token')
+const token = localStorage.getItem('token')
 const haySession = !!token
 
 if (haySession) {
@@ -25,9 +25,9 @@ if (haySession) {
 // ─── COLORES POR ESTADO ───────────────────────────────────────────
 function getBadgeColor(estado) {
     const colores = {
-        disponible:    '#22c55e',
-        prestado:      '#f59e0b',
-        dañado:        '#ef4444',
+        disponible: '#22c55e',
+        prestado: '#f59e0b',
+        dañado: '#ef4444',
         mantenimiento: '#6366f1'
     }
     return colores[estado] || '#94a3b8'
@@ -42,14 +42,14 @@ async function solicitarEquipo(id_equipo, nombre, btn) {
     }
 
     const id_usuario = parseInt(localStorage.getItem('id_usuario'))
-    btn.disabled  = true
+    btn.disabled = true
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Solicitando...'
 
     try {
-        const res  = await fetch(`${API}/solicitudes`, {
-            method:  'POST',
+        const res = await fetch(`${API}/solicitudes`, {
+            method: 'POST',
             headers: {
-                'Content-Type':  'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ id_usuario, id_equipo })
@@ -59,16 +59,16 @@ async function solicitarEquipo(id_equipo, nombre, btn) {
 
         if (res.ok) {
             mostrarToast(`✅ Solicitud enviada para "${nombre}"`, 'success')
-            btn.innerHTML    = '<i class="fas fa-check"></i> Solicitado'
+            btn.innerHTML = '<i class="fas fa-check"></i> Solicitado'
             btn.style.background = '#22c55e'
         } else {
             mostrarToast(data.message || 'Error al enviar solicitud', 'error')
-            btn.disabled  = false
+            btn.disabled = false
             btn.innerHTML = '<i class="fas fa-hand-holding"></i> Solicitar'
         }
     } catch {
         mostrarToast('Error de conexión', 'error')
-        btn.disabled  = false
+        btn.disabled = false
         btn.innerHTML = '<i class="fas fa-hand-holding"></i> Solicitar'
     }
 }
@@ -90,8 +90,8 @@ function mostrarToast(mensaje, tipo = 'success') {
 // ─── RENDERIZAR PÁGINA ────────────────────────────────────────────
 function renderizarEquipos(equipos) {
     const contenedor = document.getElementById('contenedorEquipos')
-    const subtitulo  = document.getElementById('subtituloSeccion')
-    const totalPags  = Math.ceil(equipos.length / POR_PAGINA)
+    const subtitulo = document.getElementById('subtituloSeccion')
+    const totalPags = Math.ceil(equipos.length / POR_PAGINA)
 
     // Asegurar que paginaActual no supere el total
     if (paginaActual > totalPags) paginaActual = 1
@@ -116,14 +116,14 @@ function renderizarEquipos(equipos) {
         let boton = ''
 
         if (disponible) {
-            boton = haySession
-                ? `<button onclick="solicitarEquipo(${equipo.id_equipo}, '${equipo.nombre.replace(/'/g, "\\'")}', this)"
+            boton = haySession ?
+                `<button onclick="solicitarEquipo(${equipo.id_equipo}, '${equipo.nombre.replace(/'/g, "\\'")}', this)"
                     style="margin-top:12px; width:100%; padding:10px; border:none;
                     background:var(--primary); color:white; border-radius:10px; font-weight:700;
                     font-size:0.85rem; cursor:pointer; font-family:'Montserrat',sans-serif; transition:0.2s;">
                     <i class="fas fa-hand-holding"></i> Solicitar
-                </button>`
-                : `<a href="login.html"
+                </button>` :
+                `<a href="login.html"
                     style="display:block; margin-top:12px; width:100%; padding:10px; text-align:center;
                     background:var(--primary); color:white; border-radius:10px; font-weight:700;
                     font-size:0.85rem; text-decoration:none; box-sizing:border-box;">
@@ -232,15 +232,14 @@ function seleccionarCategoria(idCategoria, elemento) {
     document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('activa'))
     elemento.classList.add('activa')
     categoriaActiva = idCategoria
-    paginaActual    = 1
+    paginaActual = 1
 
-    document.getElementById('tituloSeccion').textContent = idCategoria
-        ? elemento.querySelector('span:not(.badge-count)')?.textContent || 'Catálogo'
-        : 'Catálogo de Equipos'
+    document.getElementById('tituloSeccion').textContent = idCategoria ?
+        elemento.querySelector('span:not(.badge-count)') ? textContent || 'Catálogo' : 'Catálogo de Equipos' :
 
-    equiposFiltrados = idCategoria
-        ? todosLosEquipos.filter(e => e.id_categoria === idCategoria)
-        : todosLosEquipos
+        equiposFiltrados = idCategoria ?
+        todosLosEquipos.filter(e => e.id_categoria === idCategoria) :
+        todosLosEquipos
 
     renderizarEquipos(equiposFiltrados)
 }
@@ -288,7 +287,7 @@ async function cargarCategorias() {
 async function cargarEquipos() {
     try {
         const res = await fetch(`${API}/equipos`)
-        todosLosEquipos  = await res.json()
+        todosLosEquipos = await res.json()
         equiposFiltrados = todosLosEquipos
         renderizarEquipos(equiposFiltrados)
         await cargarCategorias()
