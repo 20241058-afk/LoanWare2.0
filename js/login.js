@@ -1,42 +1,59 @@
 const API = 'https://prestamos-xi.vercel.app/api'
 
 // ── ESTADÍSTICAS PÚBLICAS ──────────────────────────────────────────
-// Solo llama endpoints públicos que no requieren token
 async function cargarEstadisticas() {
     try {
-        const [equiposRes, categoriasRes] = await Promise.all([
+        const [equiposRes, categoriasRes, solicitudesRes] = await Promise.all([
             fetch(`${API}/equipos`),
-            fetch(`${API}/categorias`)
+            fetch(`${API}/categorias`),
+            fetch(`${API}/solicitudes`)
         ])
 
-        if (!equiposRes.ok || !categoriasRes.ok) return
+        const equipos      = await equiposRes.json()
+        const categorias   = await categoriasRes.json()
+        const solicitudes  = await solicitudesRes.json()
 
-        const equipos    = await equiposRes.json()
-        const categorias = await categoriasRes.json()
+        // Equipos disponibles
+        const disponibles = Array.isArray(equipos)
+            ? equipos.filter(e => e.estado === 'disponible').length
+            : 0
 
-        const disponibles     = Array.isArray(equipos)    ? equipos.filter(e => e.estado === 'disponible').length : 0
+        // Total usuarios únicos en solicitudes (aproximado público)
+        const totalPrestamos = Array.isArray(solicitudes) ? solicitudes.length : 0
         const totalCategorias = Array.isArray(categorias) ? categorias.length : 0
-        const totalEquipos    = Array.isArray(equipos)    ? equipos.length    : 0
+
+        // Usuarios registrados — endpoint público si existe
+        let totalUsuarios = '—'
+        try {
+            const usuariosRes = await fetch(`${API}/usuarios/total`)
+            if (usuariosRes.ok) {
+                const u = await usuariosRes.json()
+                totalUsuarios = u.total ?? '—'
+            }
+        } catch { /* no hay endpoint, dejamos —  */ }
 
         animarNumero('statEquipos',    disponibles)
+        animarNumero('statPrestamos',  totalPrestamos)
         animarNumero('statCategorias', totalCategorias)
-        animarNumero('statPrestamos',  totalEquipos)
-        // statUsuarios se queda en "—" hasta que exista el endpoint
+        if (totalUsuarios !== '—') animarNumero('statUsuarios', totalUsuarios)
 
     } catch {
-        // Falló silenciosamente — las tarjetas se quedan en "—"
+        // Si falla, dejar los "—" sin romper el login
     }
 }
 
 // ── ANIMACIÓN DE CONTADOR ──────────────────────────────────────────
 function animarNumero(id, objetivo) {
-    const el = document.getElementById(id)
-    if (!el || objetivo === 0) { if (el) el.textContent = objetivo; return }
-    let actual = 0
-    const paso = Math.ceil(objetivo / 30)
+    const el       = document.getElementById(id)
+    if (!el || objetivo === 0) { el && (el.textContent = objetivo); return }
+    let actual     = 0
+    const paso     = Math.ceil(objetivo / 30)
     const intervalo = setInterval(() => {
         actual += paso
-        if (actual >= objetivo) { actual = objetivo; clearInterval(intervalo) }
+        if (actual >= objetivo) {
+            actual = objetivo
+            clearInterval(intervalo)
+        }
         el.textContent = actual
     }, 40)
 }
@@ -66,9 +83,9 @@ function mostrarError(mensaje) {
 function setLoading(loading) {
     const btn   = document.getElementById('btnLogin')
     const texto = document.getElementById('textoBtn')
-    btn.disabled      = loading
-    texto.textContent = loading ? 'Verificando...' : 'Entrar al Sistema'
-    btn.style.opacity = loading ? '0.6' : '1'
+    btn.disabled          = loading
+    texto.textContent     = loading ? 'Verificando...' : 'Entrar al Sistema'
+    btn.style.opacity     = loading ? '0.6' : '1'
 }
 
 // ── LOGIN PRINCIPAL ────────────────────────────────────────────────
@@ -84,33 +101,43 @@ async function iniciarSesion() {
     setLoading(true)
 
     try {
-        const res  = await fetch(`${API}/auth/login`, {
-            method:  'POST',
+        const res = await fetch(`${API}/auth/login`, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ correo, password })
-        })
+            body: JSON.stringify({ correo, password })
+        });
 
-        const data = await res.json()
-
-        if (!res.ok) {
-            mostrarError(data.message || 'Credenciales inválidas.')
-            return
+        // Verificamos si la respuesta es JSON antes de procesar
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("El servidor no respondió con JSON. Posible error 500.");
         }
 
-        localStorage.setItem('token',      data.token)
-        localStorage.setItem('id_usuario', data.usuario.id)
-        localStorage.setItem('nombre',     data.usuario.nombre)
-        localStorage.setItem('usuario',    data.usuario.usuario)
-        localStorage.setItem('id_rol',     data.usuario.id_rol)
+        const data = await res.json();
 
-        window.location.href = data.usuario.id_rol === 1
-            ? 'adminDashboard.html'
-            : 'home.html'
+        if (!res.ok) {
+            mostrarError(data.message || 'Credenciales inválidas.');
+            return;
+        }
 
-    } catch {
-        mostrarError('Error de conexión. Verifica que el servidor esté activo.')
+        // VALIDACIÓN CRUCIAL: Verificar que 'data.usuario' existe antes de usarlo
+        if (!data.usuario) {
+            mostrarError('Error: El servidor no envió los datos del usuario.');
+            return;
+        }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('id_usuario', data.usuario.id);
+        localStorage.setItem('nombre', data.usuario.nombre);
+        localStorage.setItem('id_rol', data.usuario.id_rol);
+
+        window.location.href = data.usuario.id_rol === 1 ? 'adminDashboard.html' : 'home.html';
+
+    } catch (err) {
+        console.error(err);
+        mostrarError('Error de conexión o error interno del servidor (500).');
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
 }
 
