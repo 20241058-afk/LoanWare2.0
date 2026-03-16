@@ -149,7 +149,7 @@ document.getElementById('password').addEventListener('keydown', e => { if (e.key
 const token = localStorage.getItem('token')
 if (token) {
     const idRol = parseInt(localStorage.getItem('id_rol'))
-    window.location.href = idRol === 1 ? 'adminDashboard.html' : './public/home.html'
+    window.location.href = idRol === 1 ? 'adminDashboard.html' : 'public/home.html'
 }
 
 // ── CARGAR STATS AL INICIAR ────────────────────────────────────────
