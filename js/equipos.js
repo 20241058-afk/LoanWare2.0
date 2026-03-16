@@ -228,75 +228,104 @@ function cambiarPagina(pagina) {
 }
 
 // ─── SELECCIONAR CATEGORÍA ────────────────────────────────────────
-function seleccionarCategoria(idCategoria, elemento) {
-    document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('activa'))
-    elemento.classList.add('activa')
-    categoriaActiva = idCategoria
-    paginaActual = 1
+function seleccionarCategoria(nombreCategoria, elemento) {
+    // Quitar clase activa de todos
+    document.querySelectorAll('.categoria-item').forEach(el => el.classList.remove('activa'));
+    // Poner clase activa al seleccionado
+    elemento.classList.add('activa');
 
-    document.getElementById('tituloSeccion').textContent = idCategoria ?
-        elemento.querySelector('span:not(.badge-count)') ? textContent || 'Catálogo' : 'Catálogo de Equipos' :
+    categoriaActiva = nombreCategoria;
 
-        equiposFiltrados = idCategoria ?
-        todosLosEquipos.filter(e => e.id_categoria === idCategoria) :
-        todosLosEquipos
+    const titulo = document.getElementById('tituloSeccion');
+    titulo.textContent = nombreCategoria ? nombreCategoria : 'Catálogo de Equipos';
 
-    renderizarEquipos(equiposFiltrados)
+    // Filtrar por el nombre de la categoría
+    const filtrados = nombreCategoria
+        ? todosLosEquipos.filter(e => e.categoria.trim().toLowerCase() === nombreCategoria.trim().toLowerCase())
+        : todosLosEquipos;
+
+    renderizarEquipos(filtrados);
 }
+
 
 // ─── FILTRAR CATEGORÍAS EN SIDEBAR ───────────────────────────────
 function filtrarCategorias() {
     const texto = document.getElementById('buscador').value.toLowerCase()
     document.querySelectorAll('.categoria-item[data-nombre]').forEach(el => {
-        el.parentElement.style.display =
-            el.dataset.nombre.toLowerCase().includes(texto) ? '' : 'none'
+        const nombre = el.dataset.nombre.toLowerCase()
+        el.parentElement.style.display = nombre.includes(texto) ? '' : 'none'
     })
 }
 
 // ─── CARGAR CATEGORÍAS ────────────────────────────────────────────
 async function cargarCategorias() {
     try {
-        const res = await fetch(`${API}/categorias`)
-        const categorias = await res.json()
+        const res = await fetch(`${API}/categorias`);
+        const categorias = await res.json();
 
-        const lista = document.getElementById('listaCategorias')
-        document.getElementById('cargandoCategorias').remove()
+        const lista = document.getElementById('listaCategorias');
+        const loader = document.getElementById('cargandoCategorias');
+        
+        if (loader) loader.remove();
+        if (!lista) return;
+
+        // 1. Limpiamos la lista excepto el primer elemento (Todos los equipos)
+        const itemTodos = lista.firstElementChild;
+        lista.innerHTML = '';
+        lista.appendChild(itemTodos);
 
         categorias.forEach(cat => {
-            const count = todosLosEquipos.filter(e => e.id_categoria === cat.id_categoria).length
-            if (count === 0) return
-            const li = document.createElement('li')
+            // 2. CORRECCIÓN: Filtramos por el NOMBRE de la categoría
+            // Comparamos el nombre de la categoría de la API con el campo 'categoria' del equipo
+            const count = todosLosEquipos.filter(e => 
+                e.categoria.trim().toLowerCase() === cat.nombre.trim().toLowerCase()
+            ).length;
+
+            if (count === 0) return; // Si no hay equipos, no mostramos la categoría
+
+            const li = document.createElement('li');
             li.innerHTML = `
                 <a class="categoria-item" data-nombre="${cat.nombre}"
-                onclick="seleccionarCategoria(${cat.id_categoria}, this)">
-                    <i class="fas fa-box"></i>
+                onclick="seleccionarCategoria('${cat.nombre}', this)">
+                    <i class="fas fa-tag"></i>
                     <span>${cat.nombre}</span>
                     <span class="badge-count">${count}</span>
-                </a>`
-            lista.appendChild(li)
-        })
+                </a>`;
+            lista.appendChild(li);
+        });
 
-        document.getElementById('badge-todos').textContent = todosLosEquipos.length
+        const badgeTodos = document.getElementById('badge-todos');
+        if (badgeTodos) badgeTodos.textContent = todosLosEquipos.length;
 
     } catch (error) {
-        console.error('Error cargando categorías:', error)
+        console.error('Error cargando categorías:', error);
     }
 }
 
 // ─── CARGAR EQUIPOS ───────────────────────────────────────────────
 async function cargarEquipos() {
+    const contenedor = document.getElementById('contenedorEquipos');
     try {
-        const res = await fetch(`${API}/equipos`)
-        todosLosEquipos = await res.json()
-        equiposFiltrados = todosLosEquipos
-        renderizarEquipos(equiposFiltrados)
-        await cargarCategorias()
+        const res = await fetch(`${API}/equipos`);
+        if (!res.ok) throw new Error('Error al obtener equipos');
+
+        const data = await res.json();
+        todosLosEquipos = data;
+
+        // Renderizamos inicialmente
+        renderizarEquipos(todosLosEquipos);
+
+        // Cargamos categorías DESPUÉS de tener los equipos para los contadores
+        await cargarCategorias();
+
     } catch (error) {
-        document.getElementById('contenedorEquipos').innerHTML = `
+        console.error("Error detallado:", error);
+        contenedor.innerHTML = `
             <div class="sin-resultados">
                 <i class="fas fa-triangle-exclamation"></i>
                 <p>Error al conectar con el servidor: ${error.message}</p>
-            </div>`
+                <button onclick="location.reload()" class="btn-solicitar" style="margin-top:10px">Reintentar</button>
+            </div>`;
     }
 }
 
