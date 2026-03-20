@@ -89,34 +89,58 @@ document.addEventListener('click', (e) => {
     }
 });
 
-
-function actualizarBotonSesion() {
-    // Buscamos el botón por ID (asegúrate de ponerle id="btnSesion" en el HTML)
-    const btnSesion = document.getElementById('btnSesion');
-    const token = localStorage.getItem('token');
-    const nombreUsuario = localStorage.getItem('nombre');
-
-    if (token && btnSesion) {
-        // SI HAY SESIÓN:
-        // 1. Cambiamos el texto y el icono
-        btnSesion.innerHTML = `<i class="fas fa-user-circle"></i> ${nombreUsuario || 'Mi Perfil'}`;
-        
-        // 2. Apuntamos al perfil (está en la misma carpeta 'public')
-        btnSesion.href = 'perfil.html';
-        
-        // 3. Estilo visual de "Sesión Activa" (Opcional)
-        btnSesion.style.background = 'var(--accent)';
-        btnSesion.style.color = 'var(--primary)';
-    } else if (btnSesion) {
-        // SI NO HAY SESIÓN:
-        // El login está afuera de la carpeta 'public'
-        btnSesion.href = '../login.html';
-        btnSesion.innerHTML = `<i class="fas fa-right-to-bracket"></i> Iniciar Sesión`;
+// --- GESTIÓN DE SESIÓN MEJORADA ---
+function cerrarSesion() {
+    console.log("Cerrando sesión...");
+    localStorage.clear(); 
+    
+    const path = window.location.pathname;
+    // Si estamos en /public/, subimos un nivel para ir al login de la raíz
+    if (path.includes('/public/')) {
+        window.location.href = '../login.html';
+    } else {
+        window.location.href = 'login.html';
     }
 }
 
-// ─── INICIALIZACIÓN ───────────────────────────────────────────────
-// Ejecutamos la función de sesión cuando cargue el documento
+function actualizarBotonSesion() {
+    const btnSesion = document.getElementById('btnSesion');
+    const token = localStorage.getItem('token');
+    const nombreUsuario = localStorage.getItem('nombre'); // Asegúrate de guardar 'nombre' en el login
+    const rol = localStorage.getItem('id_rol'); 
+
+    if (token && btnSesion) {
+        // 1. Cambiar el texto del botón
+        // Si tienes el nombre guardado lo ponemos, si no, ponemos "Mi Perfil"
+        const textoMostrar = nombreUsuario ? nombreUsuario : "Mi Perfil";
+        btnSesion.innerHTML = `<i class="fas fa-user-circle"></i> ${textoMostrar}`;
+
+        // 2. Lógica de redirección que ya tenías
+        const path = window.location.pathname;
+        const enPublic = path.includes('/public/');
+
+        if (rol == "1") { 
+            btnSesion.href = enPublic ? '../perfil.html' : 'perfil.html';
+        } else {
+            btnSesion.href = enPublic ? 'perfil.html' : 'public/perfil.html';
+        }
+    }
+}
+// --- LÓGICA DE BURBUJA ---
 document.addEventListener('DOMContentLoaded', () => {
     actualizarBotonSesion();
+
+    const accessBtn = document.getElementById('accessBtn');
+    const accessMenu = document.getElementById('accessMenu');
+
+    if (accessBtn && accessMenu) {
+        accessBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            accessMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!accessMenu.contains(e.target)) accessMenu.classList.remove('active');
+        });
+    }
 });
